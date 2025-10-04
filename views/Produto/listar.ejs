@@ -1,0 +1,40 @@
+<script src="/js/Produto/listar.js"></script>
+
+<div>
+    <h1>Produtos</h1>
+    <div>
+        <a href="/produto/cadastro" class="btn btn-primary"><i class="fas fa-plus"></i> Cadastrar</a>
+    </div>
+    <div class="table-responsive" style="margin-top: 15px;">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>Quantidade</th>
+                    <th>Categoria</th>
+                    <th>Marca</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%for(let i = 0; i < lista.length; i ++){ %>
+                    <tr>
+                        <td><%= lista[i].produtoCodigo %></td>
+                        <td><%= lista[i].produtoNome %></td>
+                        <td><%= lista[i].produtoQuantidade %></td>
+                        <td><%= lista[i].categoriaNome %></td>
+                        <td><%= lista[i].marcaNome %></td>                   
+                        <td>
+                            <div>
+                                <a href="/produto/alterar/<%= lista[i].produtoId %>" class="btn btn-primary"> <i class="fas fa-pen"></i></a>
+                                <button data-codigo="<%=lista.produtoId %>" class="btn btn-danger btnExcluir"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
