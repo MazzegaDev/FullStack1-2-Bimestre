@@ -30,6 +30,7 @@ app.use(cookieParser());
 app.use("/login", loginRoute);
 let auth = new AuthMiddleware();
 
+//Tudo que estiver abaixa dessa linha tera a verificação de usuario
 app.use(auth.verificarUsuarioLogado);
 
 app.use('/', homeRoute)
