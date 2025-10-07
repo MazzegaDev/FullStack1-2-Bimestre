@@ -27,6 +27,7 @@ class ProdutoController {
         console.log(req);
         var ok = true;
         //req.file.buffer <- dentro do atributo buffer é armazenado o blob da imagem
+        //OBS: files -> cliente | file -> servidor
         if(req.body.codigo != "" && req.body.nome != "" && 
         req.body.quantidade != "" && req.body.quantidade  != '0' && 
         req.body.marca != '0' && req.body.categoria  != '0' && req.file != null) {

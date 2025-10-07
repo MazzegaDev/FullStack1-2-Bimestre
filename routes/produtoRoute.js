@@ -16,6 +16,6 @@ produtoRouter.get('/cadastro', ctrl.cadastroView);
 produtoRouter.post("/cadastro", upload.single("imagem"), ctrl.cadastrarProduto);
 produtoRouter.post("/excluir", ctrl.excluirProduto);
 produtoRouter.get("/alterar/:id", ctrl.alterarView);
-produtoRouter.post("/alterar", ctrl.alterarProduto);
+produtoRouter.post("/alterar", upload.single("imagem"),ctrl.alterarProduto);
 
 module.exports = produtoRouter;

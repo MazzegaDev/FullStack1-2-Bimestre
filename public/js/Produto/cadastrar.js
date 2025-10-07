@@ -17,7 +17,7 @@ function previa() {
     //Div aonde ira aparecer a imagem
     let img = document.getElementById("previaImagem");
 
-    //Cria uma url apartir da imagem inserida no arquivi
+    //Cria uma url apartir da imagem inserida no arquivo
     let urlImg = URL.createObjectURL(this.files[0]);
 
     //A imagem recebe a ulr criada

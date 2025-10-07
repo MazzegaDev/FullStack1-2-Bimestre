@@ -148,7 +148,8 @@ class ProdutoModel {
 
       let imgB64 = "";
       if (row["prd_imagem"] != null) {
-        imgB64 = "data:image/jpg;base64" + row["prd_imagem"].toString("base64");
+        imgB64 =
+            "data:image/jpg;base64," + row["prd_imagem"].toString("base64");
       }
 
       produto = new ProdutoModel(
@@ -191,7 +192,7 @@ class ProdutoModel {
         let imgB64 = "";
         if (row["prd_imagem"] != null) {
           imgB64 =
-            "data:image/jpg;base64" + row["prd_imagem"].toString("base64");
+            "data:image/png;base64," + row["prd_imagem"].toString("base64");
         }
 
         listaRetorno.push(
