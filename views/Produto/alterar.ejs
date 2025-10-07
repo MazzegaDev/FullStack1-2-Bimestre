@@ -45,6 +45,23 @@
             <% } %>    
           </select>
         </div>
+        <div class="form-group">
+          <label for="">Imagem do produto</label>
+          <input type="file" class="form-control" id="inputImagem">
+        </div>
+        <div class="form-group">
+          <label id="divPrevia" style="display: none;">Previa da imagem</label>
+          <div>
+            <% if(produtoAlter.produtoImagem == ""){%>
+              <img src="/img/produto-sem-imagem.webp" width="100" alt="Produto sem foto">
+            <%}else{%>
+              <img width="100" id="previaImagem" src="<%=produtoAlter.produtoImagem  %>" >
+            <%}%>
+             
+            
+          </div>
+          
+        </div>
         <div>
 
             <button class="btn btn-primary" type="button" id="btnAlterar">Alterar</button>

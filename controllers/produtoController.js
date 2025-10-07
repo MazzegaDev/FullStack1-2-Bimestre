@@ -24,7 +24,9 @@ class ProdutoController {
         res.send({ok: ok});
     }
     async cadastrarProduto(req, res){
+        console.log(req);
         var ok = true;
+        //req.file.buffer <- dentro do atributo buffer é armazenado o blob da imagem
         if(req.body.codigo != "" && req.body.nome != "" && 
         req.body.quantidade != "" && req.body.quantidade  != '0' && 
         req.body.marca != '0' && req.body.categoria  != '0' && req.file != null) {
@@ -56,10 +58,10 @@ class ProdutoController {
     }
 
     async alterarProduto(req, res) {
-        console.log(req);
+        //console.log(req);
         var ok = true;
         if(req.body.codigo != "" && req.body.nome != "" && req.body.quantidade != "" && req.body.quantidade  != '0' && req.body.marca != '0' && req.body.categoria  != '0' && req.file != null) {
-            //req.file.buffer <- dentro do atributo buffer é armazenado o blob da imagem
+            
             let produto = new ProdutoModel(req.body.id, req.body.codigo, req.body.nome, req.body.quantidade, req.body.categoria, req.body.marca, "", "", req.file.buffer);
             ok = await produto.gravar();
         }

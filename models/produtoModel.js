@@ -32,6 +32,9 @@ class ProdutoModel {
   get produtoQuantidade() {
     return this.#produtoQuantidade;
   }
+  get produtoImagem() {
+    return this.#produtoImagem;
+  }
   set produtoQuantidade(produtoQuantidade) {
     this.#produtoQuantidade = produtoQuantidade;
   }
@@ -98,6 +101,7 @@ class ProdutoModel {
   }
 
   async gravar() {
+    //Se o metodo nao encotrar id é um cadastro (sem o input hiden)
     if (this.#produtoId == 0) {
       let sql =
         "insert into tb_produto (prd_cod, prd_nome, prd_quantidade, cat_id, mar_id, prd_imagem) values (?, ?, ?, ?, ?, ?)";
@@ -108,11 +112,12 @@ class ProdutoModel {
         this.#produtoQuantidade,
         this.#categoriaId,
         this.#marcaId,
-        this.#produtoImagem
+        this.#produtoImagem,
       ];
 
       return await conexao.ExecutaComandoNonQuery(sql, valores);
     } else {
+      //caso encontre um id é alteração
       //alterar
       let sql =
         "update tb_produto set prd_cod = ?, prd_nome =?, prd_quantidade= ?, cat_id = ?, mar_id = ?, prd_imagem = ?  where prd_id = ?";
@@ -125,7 +130,6 @@ class ProdutoModel {
         this.#marcaId,
         this.#produtoImagem,
         this.#produtoId,
-        
       ];
 
       return (await conexao.ExecutaComandoNonQuery(sql, valores)) > 0;
@@ -142,7 +146,10 @@ class ProdutoModel {
     if (rows.length > 0) {
       var row = rows[0];
 
-      let imagem = "";
+      let imgB64 = "";
+      if (row["prd_imagem"] != null) {
+        imgB64 = "data:image/jpg;base64" + row["prd_imagem"].toString("base64");
+      }
 
       produto = new ProdutoModel(
         row["prd_id"],
@@ -152,7 +159,8 @@ class ProdutoModel {
         row["cat_id"],
         row["mar_id"],
         "",
-        ""
+        "",
+        imgB64
       );
 
       if (row["prd_imagem"] != null) {
@@ -179,6 +187,13 @@ class ProdutoModel {
       for (let i = 0; i < rows.length; i++) {
         var row = rows[i];
 
+        //Converter a imagem | bin -> base64
+        let imgB64 = "";
+        if (row["prd_imagem"] != null) {
+          imgB64 =
+            "data:image/jpg;base64" + row["prd_imagem"].toString("base64");
+        }
+
         listaRetorno.push(
           new ProdutoModel(
             row["prd_id"],
@@ -188,7 +203,8 @@ class ProdutoModel {
             row["cat_id"],
             row["mar_id"],
             row["cat_nome"],
-            row["mar_nome"]
+            row["mar_nome"],
+            imgB64 //Imagem convertida em base64 para poder ser exibida
           )
         );
       }
