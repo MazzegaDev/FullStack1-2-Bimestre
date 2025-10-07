@@ -36,7 +36,17 @@
             <% } %>  
           </select>
         </div>
-
+        <div class="form-group">
+          <label for="">Imagem do produto</label>
+          <input type="file" class="form-control" id="inputImagem">
+        </div>
+        <div class="form-group">
+          <label id="divPrevia" style="display: none;">Previa da imagem</label>
+          <div>
+            <img width="250" id="previaImagem" >
+          </div>
+          
+        </div>
         <div>
             <button class="btn btn-primary" type="button" id="btnGravar">Gravar</button>
             <a href="/produto" class="btn btn-default">Voltar</a>
