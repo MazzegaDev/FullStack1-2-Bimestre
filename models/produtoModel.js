@@ -6,11 +6,19 @@ class ProdutoModel {
   #produtoCodigo;
   #produtoNome;
   #produtoQuantidade;
+  #produtoPreco;
   #categoriaId;
   #categoriaNome;
   #marcaId;
   #marcaNome;
   #produtoImagem;
+
+  get produtoPreco(){
+    return this.#produtoPreco
+  }
+  set produtoPreco(preco){
+    this.#produtoPreco = preco;
+  }
   get produtoId() {
     return this.#produtoId;
   }
@@ -74,6 +82,7 @@ class ProdutoModel {
     produtoCodigo,
     produtoNome,
     produtoQuantidade,
+    produtoPreco,
     categoriaId,
     marcaId,
     categoriaNome,
@@ -84,6 +93,7 @@ class ProdutoModel {
     this.#produtoCodigo = produtoCodigo;
     this.#produtoNome = produtoNome;
     this.#produtoQuantidade = produtoQuantidade;
+    this.#produtoPreco = produtoPreco
     this.#categoriaId = categoriaId;
     this.#categoriaNome = categoriaNome;
     this.#marcaId = marcaId;
@@ -104,12 +114,13 @@ class ProdutoModel {
     //Se o metodo nao encotrar id é um cadastro (sem o input hiden)
     if (this.#produtoId == 0) {
       let sql =
-        "insert into tb_produto (prd_cod, prd_nome, prd_quantidade, cat_id, mar_id, prd_imagem) values (?, ?, ?, ?, ?, ?)";
+        "insert into tb_produto (prd_cod, prd_nome, prd_quantidade, prd_preco, cat_id, mar_id, prd_imagem) values (?, ?, ?, ?, ?, ?, ?)";
 
       let valores = [
         this.#produtoCodigo,
         this.#produtoNome,
         this.#produtoQuantidade,
+        this.#produtoPreco,
         this.#categoriaId,
         this.#marcaId,
         this.#produtoImagem,
@@ -120,12 +131,13 @@ class ProdutoModel {
       //caso encontre um id é alteração
       //alterar
       let sql =
-        "update tb_produto set prd_cod = ?, prd_nome =?, prd_quantidade= ?, cat_id = ?, mar_id = ?, prd_imagem = ?  where prd_id = ?";
+        "update tb_produto set prd_cod = ?, prd_nome =?, prd_quantidade= ?, prd_preco = ?, cat_id = ?, mar_id = ?, prd_imagem = ?  where prd_id = ?";
 
       let valores = [
         this.#produtoCodigo,
         this.#produtoNome,
         this.#produtoQuantidade,
+        this.#produtoPreco,
         this.#categoriaId,
         this.#marcaId,
         this.#produtoImagem,
@@ -145,32 +157,37 @@ class ProdutoModel {
 
     if (rows.length > 0) {
       var row = rows[0];
+      //Transforma a imagem do produto encontrado em B64 para ser exibida
+      //let imgB64 = "";
+      //if (row["prd_imagem"] != null) {
+        //imgB64 =
+          //  "data:image/jpg;base64," + row["prd_imagem"].toString("base64");
+      //}
 
-      let imgB64 = "";
-      if (row["prd_imagem"] != null) {
-        imgB64 =
-            "data:image/jpg;base64," + row["prd_imagem"].toString("base64");
-      }
+      //Metodo com imagem local
+        let img = "";
+        if(row["prd_imagem"] != null){ // Verifica se o produto tem imagem para ser listado
+          //Nossa variavel global da pasta de imagem
+          img = global.CAMINHO_IMG + row["prd_imagem"] // se o produto tem imagem a gente estrutura a imagem com o caminho do produto salvo
+          //Ex /img/produtosPRD-1712372378 isso sera lido no html e carregado a devida imagem
+        }else{
+          img = global.CAMINHO_IMG + "produto-sem-imagem.webp"; //Caso o produto nao tenha imagem ele recebe a img padrao
+        }
 
       produto = new ProdutoModel(
         row["prd_id"],
         row["prd_cod"],
         row["prd_nome"],
         row["prd_quantidade"],
+        row["prd_preco"],
         row["cat_id"],
         row["mar_id"],
         "",
         "",
-        imgB64
+        img
+        //imgB64 //Estrutura o produto com o B64
       );
 
-      if (row["prd_imagem"] != null) {
-        produto.imagem = global.CAMINHO_IMG_BROWSER + row["prd_imagem"];
-        produto.possuiImagem = true;
-      } else {
-        produto.imagem = global.CAMINHO_IMG_BROWSER + "sem-foto.png";
-        produto.possuiImagem = false;
-      }
     }
 
     return produto;
@@ -187,13 +204,25 @@ class ProdutoModel {
     if (rows.length > 0) {
       for (let i = 0; i < rows.length; i++) {
         var row = rows[i];
-
+        
+        //Metodo com imagem binaria
         //Converter a imagem | bin -> base64
-        let imgB64 = "";
+        /*let imgB64 = "";
         if (row["prd_imagem"] != null) {
           imgB64 =
             "data:image/png;base64," + row["prd_imagem"].toString("base64");
+        }*/
+
+        //Metodo com imagem local
+        let img = "";
+        if(row["prd_imagem"] != null){ // Verifica se o produto tem imagem para ser listado
+          //Nossa variavel global da pasta de imagem
+          img = global.CAMINHO_IMG + row["prd_imagem"] // se o produto tem imagem a gente estrutura a imagem com o caminho do produto salvo
+          //Ex /img/produtosPRD-1712372378 isso sera lido no html e carregado a devida imagem
+        }else{
+          img = global.CAMINHO_IMG + "produto-sem-imagem.webp"; //Caso o produto nao tenha imagem ele recebe a img padrao
         }
+        
 
         listaRetorno.push(
           new ProdutoModel(
@@ -201,11 +230,13 @@ class ProdutoModel {
             row["prd_cod"],
             row["prd_nome"],
             row["prd_quantidade"],
+            row["prd_preco"],
             row["cat_id"],
             row["mar_id"],
             row["cat_nome"],
             row["mar_nome"],
-            imgB64 //Imagem convertida em base64 para poder ser exibida
+            img
+
           )
         );
       }

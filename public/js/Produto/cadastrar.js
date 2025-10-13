@@ -32,6 +32,7 @@ function gravarProduto() {
   var inputNome = document.getElementById("inputNome");
   var inputImagem = document.getElementById("inputImagem");
   var inputQtde = document.getElementById("inputQtde");
+  var inputPreco = document.getElementById("inputPreco");
   var selMarca = document.getElementById("selMarca");
   var selCategoria = document.getElementById("selCategoria");
 
@@ -41,6 +42,7 @@ function gravarProduto() {
     inputNome.value != "" &&
     inputQtde.value != "" &&
     inputQtde.value != "0" &&
+    inputPreco.value != "0" &&
     selMarca.value != "0" &&
     selCategoria.value != "0" &&
     inputImagem.files.length > 0
@@ -58,6 +60,7 @@ function gravarProduto() {
     formData.append("codigo", inputCodigo.value);
     formData.append("nome", inputNome.value);
     formData.append("quantidade", inputQtde.value);
+    formData.append("preco", inputPreco.value);
     formData.append("marca", selMarca.value);
     formData.append("categoria", selCategoria.value);
     formData.append("imagem", inputImagem.files[0]);

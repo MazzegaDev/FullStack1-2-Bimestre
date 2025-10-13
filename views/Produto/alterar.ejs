@@ -20,6 +20,10 @@
             <input type="number" value="<%= produtoAlter.produtoQuantidade %>" class="form-control" id="inputQtde">
         </div>
         <div class="form-group">
+            <label for="inputPreco">Preço</label>
+            <input type="number" class="form-control" id="inputPreco" value="<%= produtoAlter.produtoPreco %>">
+        </div>
+        <div class="form-group">
           <label for="selMarca">Marca</label>
           <select class="form-control" id="selMarca">
             <option value="0">--Selecione--</option>
@@ -52,13 +56,7 @@
         <div class="form-group">
           <label>Previa da imagem</label>
           <div id="divPrevia">
-            <% if(produtoAlter.produtoImagem == ""){%>
-              <img src="/img/produto-sem-imagem.webp" width="100" alt="Produto sem foto">
-            <%}else{%>
               <img  width="250" id="previaImagem" src="<%=produtoAlter.produtoImagem%>" >
-            <%}%>
-             
-            
           </div>
           
         </div>

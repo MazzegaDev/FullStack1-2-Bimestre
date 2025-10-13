@@ -10,6 +10,7 @@ const perfilRoute = require('./routes/perfilRoute');
 const loginRoute = require("./routes/loginRoute");
 const cookieParser = require("cookie-parser");
 const AuthMiddleware = require('./middlewares/authMiddleware');
+const fs = require("fs")
 const app = express();
 //configurando a nossa pasta public como o nosso repositorio de arquivos estáticos (css, js, imagens)
 app.use(express.static(__dirname + "/public"))
@@ -33,12 +34,20 @@ app.use("/login", loginRoute);
 //Tudo que estiver abaixa dessa linha tera a verificação de usuario
 //app.use(auth.verificarUsuarioLogado);
 
+//Variaveis globais 
+global.CAMINHO_IMG = "/img/produtos/";
+global.CAMINHO_IMG_ABSOLUTO = __dirname + "/public/img/produtos"
+
+
 app.use('/', homeRoute)
 app.use('/produto', produtoRoute);
 app.use("/marcas", marcaRoute);
 app.use("/categorias", categoriaRoute);
 app.use("/usuarios", usuarioRoute);
 app.use("/perfis", perfilRoute);
+
+
+
 
 //ponto de inicio do nosso servidor web
 const server = app.listen('5000', function() {
