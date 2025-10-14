@@ -15,6 +15,7 @@ class ProdutoController {
     if (req.body.codigo != "") {
       if(req.file != null){
         //veio imagem
+        let produto = new ProdutoModel();
         let produtoAntigo = await produto.buscarCodigo(req.body.codigo);
         let nomeImg = produtoAntigo.produtoImagem.split("/").pop();
         //Verifica se o arquivo existe na pasta
