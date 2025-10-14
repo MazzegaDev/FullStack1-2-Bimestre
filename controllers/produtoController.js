@@ -13,6 +13,16 @@ class ProdutoController {
   async excluirProduto(req, res) {
     var ok = true;
     if (req.body.codigo != "") {
+      if(req.file != null){
+        //veio imagem
+        let produtoAntigo = await produto.buscarCodigo(req.body.codigo);
+        let nomeImg = produtoAntigo.produtoImagem.split("/").pop();
+        //Verifica se o arquivo existe na pasta
+        if(fs.existsSync(global.CAMINHO_IMG_ABSOLUTO + nomeImg)){
+          //Se o arquivo existe deleta na pasta
+          fs.unlinkSync(global.CAMINHO_IMG_ABSOLUTO + nomeImg);
+        }
+      }
       let produto = new ProdutoModel();
       ok = await produto.excluir(req.body.codigo);
     } else {
@@ -134,6 +144,7 @@ class ProdutoController {
         produto.produtoImagem = req.file.filename
       }else{
         //nao veio
+        produto.produtoImagem = produtoAntigo.produtoImagem.split("/").pop();
       }
       ok = await produto.gravar();
     } else {
