@@ -3,6 +3,7 @@ const multer = require('multer');
 const ProdutoController = require('../controllers/produtoController');
 
 const produtoRouter = express.Router();
+
 //Salvando as imagens localmente -> Pasta public
 const storage = multer.diskStorage({
     destination: function(req, file, cb){

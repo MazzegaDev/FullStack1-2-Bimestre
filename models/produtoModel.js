@@ -169,7 +169,7 @@ class ProdutoModel {
         if(row["prd_imagem"] != null){ // Verifica se o produto tem imagem para ser listado
           //Nossa variavel global da pasta de imagem
           img = global.CAMINHO_IMG + row["prd_imagem"] // se o produto tem imagem a gente estrutura a imagem com o caminho do produto salvo
-          //Ex /img/produtosPRD-1712372378 isso sera lido no html e carregado a devida imagem
+          //Ex /img/produtos/PRD-1712372378 isso sera lido no html e carregado a devida imagem
         }else{
           img = global.CAMINHO_IMG + "produto-sem-imagem.webp"; //Caso o produto nao tenha imagem ele recebe a img padrao
         }
@@ -262,9 +262,9 @@ class ProdutoModel {
         //Metodo com imagem local
         let img = "";
         if(row["prd_imagem"] != null){ // Verifica se o produto tem imagem para ser listado
-          //Nossa variavel global da pasta de imagem
+          //Nossa variavel global da pasta de imagem -> /img/produtos/
           img = global.CAMINHO_IMG + row["prd_imagem"] // se o produto tem imagem a gente estrutura a imagem com o caminho do produto salvo
-          //Ex /img/produtosPRD-1712372378 isso sera lido no html e carregado a devida imagem
+          //Ex /img/produtos/ PRD-1712372378 isso sera lido no html e carregado a devida imagem
         }else{
           img = global.CAMINHO_IMG + "produto-sem-imagem.webp"; //Caso o produto nao tenha imagem ele recebe a img padrao
         }

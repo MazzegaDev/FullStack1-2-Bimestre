@@ -29,9 +29,9 @@ app.use(cookieParser());
 
 //definindo as rotas que o nosso sistema vai reconhecer através da url do navegador
 app.use("/login", loginRoute);
-//let auth = new AuthMiddleware();
 
 //Tudo que estiver abaixa dessa linha tera a verificação de usuario
+//let auth = new AuthMiddleware();
 //app.use(auth.verificarUsuarioLogado);
 
 //Variaveis globais 

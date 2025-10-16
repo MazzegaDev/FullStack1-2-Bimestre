@@ -9,7 +9,6 @@ class ProdutoController {
     let lista = await prod.listarProdutos();
     res.render("produto/listar", { lista: lista });
   }
-
   async excluirProduto(req, res) {
     var ok = true;
     if (req.body.codigo != "") {
@@ -78,7 +77,7 @@ class ProdutoController {
         req.body.marca,
         "",
         "",
-        req.file.filename /*Aqui acessamos o nome do arquivo que se remete a sua rota*/
+        req.file.filename /*Aqui acessamos a referencia do arquivo*/
       );
 
       ok = await produto.gravar();
@@ -134,13 +133,16 @@ class ProdutoController {
       //Pega o produto antes da alteração, essa nova etapa serve para deletar imagens sem ligação na pasta
       let produtoAntigo = await produto.buscarProduto(req.body.id);
       if(req.file != null){
-        //veio imagem
+        //Pega a referencia da imagem antiga do produto
         let nomeImg = produtoAntigo.produtoImagem.split("/").pop();
+
         //Verifica se o arquivo existe na pasta
         if(fs.existsSync(global.CAMINHO_IMG_ABSOLUTO + nomeImg)){
+          
           //Se o arquivo existe deleta na pasta
           fs.unlinkSync(global.CAMINHO_IMG_ABSOLUTO + nomeImg);
         }
+        
         //O produto recebe a nova referencia da imagem
         produto.produtoImagem = req.file.filename
       }else{

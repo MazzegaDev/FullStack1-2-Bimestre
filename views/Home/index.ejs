@@ -1,5 +1,46 @@
+<script src="/js/home/carrinho.js"></script>
 
+<div class="container my-5">
+  <h1 class="text-center mb-5">Produtos disponíveis</h1>
 
-<div>
-    <h1>Início</h1>
+  <div class="row g-4">
+    <% if (lista && lista.length > 0) { %> <% for (let i = 0; i < lista.length;
+    i++) { %>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="card h-100 shadow-sm border-0">
+        <img
+          src="<%= lista[i].produtoImagem %>"
+          alt="<%= lista[i].produtoNome %>"
+          class="card-img-top"
+          id="img"
+          style="height: 220px; object-fit: cover"
+        />
+
+        <div class="card-body text-center">
+          <h5 class="card-title mb-2 nomeProduto">
+            <%= lista[i].produtoNome %>
+          </h5>
+          <p class="card-text text-success fw-bold precoProduto">
+            R$ <%= lista[i].produtoPreco %>
+          </p>
+          <p class="small text-muted mb-1">
+            <span class="badge bg-primary me-1 catNome"
+              ><%= lista[i].categoriaNome %></span
+            >
+            <span class="badge bg-secondary marcaNome"
+              ><%= lista[i].marcaNome %></span
+            >
+          </p>
+          <button class="btn btn-success w-75 btnCarrinho">
+            <i class="fas fa-cart-plus me-2"></i> Adicionar ao carrinho
+          </button>
+        </div>
+      </div>
+    </div>
+    <% } %> <% } else { %>
+    <div class="col-12 text-center text-muted">
+      <p>Nenhum produto disponível no momento.</p>
+    </div>
+    <% } %>
+  </div>
 </div>
