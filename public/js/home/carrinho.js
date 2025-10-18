@@ -1,36 +1,36 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const btnCarrinho = document.querySelectorAll("#btnCarrinho");
+    const btnCarrinho = document.querySelectorAll("#btnCarrinho");
 
-  btnCarrinho.forEach((element) => {
-    element.addEventListener("click", adicionar);
-  });
+    btnCarrinho.forEach((element) => {
+        element.addEventListener("click", adicionar);
+    });
 });
 
 function adicionar() {
-  const card = botao.closest(".card"); // pega o card pai do botão
+    const cardItem = this.closest("#card-div");
+    
+    const nomeProduto = cardItem.querySelector("#nomeProduto").textContent.trim();
+    const precoProduto = cardItem.querySelector("#precoProduto").textContent.trim();
+    const nomeCat = cardItem.querySelector("#catProduto").textContent.trim();
+    const nomeMarca = cardItem.querySelector("#marcProduto").textContent.trim();
+    const imgProduto = cardItem.querySelector("#img").src;
 
-  const nomeProduto = card.querySelector(".nomeProduto").innerText;
-  const precoProduto = card.querySelector(".precoProduto").innerText;
-  const nomeCat = card.querySelector(".catNome").innerText;
-  const nomeMarca = card.querySelector(".marcaNome").innerText;
-  const imgProduto = card.querySelector("img").src;
+    // cria objeto do produto
+    const produto = {
+        nome: nomeProduto,
+        preco: precoProduto,
+        categoria: nomeCat,
+        marca: nomeMarca,
+        imagem: imgProduto,
+    };
 
-  //Aqui pegamos o conteudo do LS e transformamos em um obj, se nao tiver nada criamos um array vazio
-  let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    console.log("Produto adicionado:", produto);
+    //Aqui pegamos o conteudo do LS e transformamos em um obj, se nao tiver nada criamos um array vazio
+    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
-  const produto = {
-    nomeProduto: nomeProduto,
-    precoProduto: precoProduto,
-    nomeCat: nomeCat,
-    nomeMarca: nomeMarca,
-    imgProduto: imgProduto,
-  };
+    //Colocamos o obj dentro do array que sera enviado ao LS
+    carrinho.push(produto);
 
-  //Colocamos o obj dentro do array que sera enviado ao LS
-  carrinho.push(produto);
-
-  //Aqui adicionamos o carrinho no localStorage, detalhe que precissamos stringificar o nosso objeto pois o LS so aceita strings
-  localStorage.setItem("carrinho", JSON.stringify(carrinho));
-
-
+    //Aqui adicionamos o carrinho no localStorage, detalhe que precissamos stringificar o nosso objeto pois o LS so aceita strings
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
 }

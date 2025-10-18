@@ -6,7 +6,7 @@
   <div class="row g-4">
     <% if (lista && lista.length > 0) { %> <% for (let i = 0; i < lista.length;
     i++) { %>
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3" id="card-div"  data-id="<%=lista[i].produtoId%>">
       <div class="card h-100 shadow-sm border-0">
         <img
           src="<%= lista[i].produtoImagem %>"
@@ -17,21 +17,21 @@
         />
 
         <div class="card-body text-center">
-          <h5 class="card-title mb-2 nomeProduto">
+          <h5 class="card-title mb-2 nomeProduto" id="nomeProduto">
             <%= lista[i].produtoNome %>
           </h5>
-          <p class="card-text text-success fw-bold precoProduto">
+          <p class="card-text text-success fw-bold precoProduto" id="precoProduto">
             R$ <%= lista[i].produtoPreco %>
           </p>
           <p class="small text-muted mb-1">
-            <span class="badge bg-primary me-1 catNome"
+            <span class="badge bg-primary me-1 catNome" id="catProduto"
               ><%= lista[i].categoriaNome %></span
             >
-            <span class="badge bg-secondary marcaNome"
+            <span class="badge bg-secondary marcaNome" id="marcProduto"
               ><%= lista[i].marcaNome %></span
             >
           </p>
-          <button class="btn btn-success w-75 btnCarrinho">
+          <button class="btn btn-success w-75 btnCarrinho" id="btnCarrinho" data-id="<%=lista[i].produtoId%>">
             <i class="fas fa-cart-plus me-2"></i> Adicionar ao carrinho
           </button>
         </div>
