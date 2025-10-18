@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function adicionar() {
     const cardItem = this.closest("#card-div");
-    
+
     const nomeProduto = cardItem.querySelector("#nomeProduto").textContent.trim();
     const precoProduto = cardItem.querySelector("#precoProduto").textContent.trim();
     const nomeCat = cardItem.querySelector("#catProduto").textContent.trim();
@@ -24,7 +24,7 @@ function adicionar() {
         imagem: imgProduto,
     };
 
-    console.log("Produto adicionado:", produto);
+    alert("Produto adicionado ao carrinho!");
     //Aqui pegamos o conteudo do LS e transformamos em um obj, se nao tiver nada criamos um array vazio
     let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
