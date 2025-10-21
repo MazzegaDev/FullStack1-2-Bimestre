@@ -28,6 +28,7 @@ app.use(expressLayouts);
 app.use(cookieParser());
 
 //definindo as rotas que o nosso sistema vai reconhecer através da url do navegador
+app.use('/', homeRoute)
 app.use("/login", loginRoute);
 
 //Tudo que estiver abaixa dessa linha tera a verificação de usuario
@@ -35,11 +36,8 @@ app.use("/login", loginRoute);
 //app.use(auth.verificarUsuarioLogado);
 
 //Variaveis globais 
-global.CAMINHO_IMG = "/img/produtos/";
-global.CAMINHO_IMG_ABSOLUTO = __dirname + "/public/img/produtos"
 
 
-app.use('/', homeRoute)
 app.use('/produto', produtoRoute);
 app.use("/marcas", marcaRoute);
 app.use("/categorias", categoriaRoute);
@@ -47,6 +45,8 @@ app.use("/usuarios", usuarioRoute);
 app.use("/perfis", perfilRoute);
 
 
+global.CAMINHO_IMG = "/img/produtos/";
+global.CAMINHO_IMG_ABSOLUTO = __dirname + "/public/img/produtos"
 
 
 //ponto de inicio do nosso servidor web
