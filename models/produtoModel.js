@@ -158,16 +158,11 @@ class ProdutoModel {
 
         if (rows.length > 0) {
             var row = rows[0];
-            //Transforma a imagem do produto encontrado em B64 para ser exibida
-            //let imgB64 = "";
-            //if (row["prd_imagem"] != null) {
-            //imgB64 =
-            //  "data:image/jpg;base64," + row["prd_imagem"].toString("base64");
-            //}
 
-            //Metodo com imagem local
             let img = "";
-            if (row["prd_imagem"] != null) {
+            if (
+                row["prd_imagem"] != null
+            ) {
                 // Verifica se o produto tem imagem para ser listado
                 //Nossa variavel global da pasta de imagem
                 img = global.CAMINHO_IMG + row["prd_imagem"]; // se o produto tem imagem a gente estrutura a imagem com o caminho do produto salvo
@@ -252,22 +247,11 @@ class ProdutoModel {
             for (let i = 0; i < rows.length; i++) {
                 var row = rows[i];
 
-                //Metodo com imagem binaria
-                //Converter a imagem | bin -> base64
-                /*let imgB64 = "";
-        if (row["prd_imagem"] != null) {
-          imgB64 =
-            "data:image/png;base64," + row["prd_imagem"].toString("base64");
-        }*/
-
                 //Metodo com imagem local
                 let img = "";
                 //Agora tambem verifica se a img existe no nosso diretorio
                 if (
-                    row["prd_imagem"] != null &&
-                    fs.existsSync(
-                        global.CAMINHO_IMG_ABSOLUTO + row["prd_imagem"]
-                    )
+                    row["prd_imagem"] != null
                 ) {
                     // Verifica se o produto tem imagem para ser listado
                     //Nossa variavel global da pasta de imagem -> /img/produtos/
@@ -295,6 +279,18 @@ class ProdutoModel {
         }
 
         return listaRetorno;
+    }
+
+    /*
+        Serializa dados do produto que fazem sentindo exibir ao cliente.
+    */
+    toJSON() {
+        return {
+            id: this.#produtoId,
+            nome: this.produtoNome,
+            preco: this.produtoPreco,
+            imagem: this.#produtoImagem,
+        };
     }
 }
 

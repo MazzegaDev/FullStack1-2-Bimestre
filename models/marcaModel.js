@@ -35,6 +35,15 @@ class MarcaModel {
         return listaRetorno;
     }
 
+    async cadastrarMarca(){
+        const sql = "insert into tb_marca (mar_nome) values (?)";
+        const values = [this.#marcaNome];
+
+        const result = await conexao.ExecutaComandoNonQuery(sql, values);
+
+        return result;
+    }
+
 }
 
 module.exports = MarcaModel;

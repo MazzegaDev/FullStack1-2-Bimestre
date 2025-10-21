@@ -31,27 +31,6 @@ class ProdutoController {
 
     res.send({ ok: ok });
   }
-  //Cadastro de imagem binaria
-  /*async cadastrarProduto(req, res){
-        console.log(req);
-        var ok = true;
-        //req.file.buffer <- dentro do atributo buffer é armazenado o blob da imagem
-        //OBS: files -> cliente | file -> servidor
-        if(req.body.codigo != "" && req.body.nome != "" && 
-        req.body.quantidade != "" && req.body.quantidade  != '0' && 
-        req.body.marca != '0' && req.body.categoria  != '0' && req.file != null Verificamos aqui se veio algum arquivo) {
-            let produto = new ProdutoModel(0, req.body.codigo, 
-                req.body.nome, req.body.quantidade, 
-                req.body.categoria, req.body.marca, "", "", req.file.buffer Aqui acessamos o binario do arquivo);
-
-            ok = await produto.gravar();
-        }
-        else{
-            ok = false;
-        }
-
-        res.send({ ok: ok })
-    }*/
 
   //Cadastro de imagem local
   async cadastrarProduto(req, res) {
@@ -171,6 +150,18 @@ class ProdutoController {
       listaMarcas: listaMarcas,
       listaCategorias: listaCategorias,
     });
+  }
+
+  /*
+    Procura exatamente o produto que foi solicitado para ir para o carrinho
+    isso serve para guardar dados consistentes
+  */
+  async obterProduto(req, res){ 
+    let produtoId = req.params.produto;
+    let produto = new ProdutoModel();
+    produto = await produto.buscarProduto(produtoId);
+
+    res.send({produto: produto});
   }
 }
 
