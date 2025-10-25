@@ -1,5 +1,6 @@
 const express = require('express');
 const multer = require('multer');
+const middlewares = require("../middlewares/authMiddleware.js");
 const ProdutoController = require('../controllers/produtoController');
 
 const produtoRouter = express.Router();
@@ -30,10 +31,12 @@ produtoRouter.get('/cadastro', ctrl.cadastroView);
 // upload.single("imagem")-> como está referenciada nossa imagem no form data
 // formData.append("imagem", inputImagem.files[0]);
 
-produtoRouter.post("/cadastro", upload.single("imagem"), ctrl.cadastrarProduto);
-produtoRouter.post("/excluir", ctrl.excluirProduto);
-produtoRouter.post("/alterar", upload.single("imagem"),ctrl.alterarProduto);
-produtoRouter.get("/alterar/:id", ctrl.alterarView);
+const auth = new middlewares();
+
+produtoRouter.post("/cadastro", auth.verificarUsuarioLogado, upload.single("imagem"), ctrl.cadastrarProduto);
+produtoRouter.post("/excluir", auth.verificarUsuarioLogado, ctrl.excluirProduto);
+produtoRouter.post("/alterar", auth.verificarUsuarioLogado, upload.single("imagem"),ctrl.alterarProduto);
+produtoRouter.get("/alterar/:id", auth.verificarUsuarioLogado, ctrl.alterarView);
 produtoRouter.get("/obter/:produto", ctrl.obterProduto);
 
 module.exports = produtoRouter;

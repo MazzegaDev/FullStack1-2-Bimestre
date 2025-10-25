@@ -30,6 +30,7 @@ app.use(cookieParser());
 //definindo as rotas que o nosso sistema vai reconhecer através da url do navegador
 app.use('/', homeRoute)
 app.use("/login", loginRoute);
+app.use('/produto', produtoRoute);
 
 //Tudo que estiver abaixa dessa linha tera a verificação de usuario
 //let auth = new AuthMiddleware();
@@ -38,7 +39,6 @@ app.use("/login", loginRoute);
 //Variaveis globais 
 
 
-app.use('/produto', produtoRoute);
 app.use("/marcas", marcaRoute);
 app.use("/categorias", categoriaRoute);
 app.use("/usuarios", usuarioRoute);

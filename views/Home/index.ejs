@@ -26,7 +26,7 @@
                         <button class="btn btn-outline-dark" type="button" data-bs-toggle="modal" data-bs-target="#modalCarrinho">
                             <i class="bi-cart-fill me-1"></i>
                             Carrinho
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            <span class="badge bg-dark text-white ms-1 rounded-pill" id="contador">0</span>
                         </button>
                         <div style="margin-left: 10px;">
                             <a class="btn btn-outline-dark" href="/login"> <i class="bi bi-person-fill"></i> Login</a>
@@ -93,9 +93,14 @@
                     <div class="modal-body">
                         ...
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary">Confirmar</button>
+                    <div class="modal-footer" style="display: flex; justify-content: space-between;">
+                        <div id="valortotal">
+                            <h3>Valor total: R$00,00</h3>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button type="button" class="btn btn-primary">Confirmar</button>
+                        </div>
                     </div>
                     </div>
                 </div>

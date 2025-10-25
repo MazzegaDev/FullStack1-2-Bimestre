@@ -5,13 +5,30 @@ document.addEventListener("DOMContentLoaded", function () {
         carrinho = JSON.parse(carinhoSerializado);
     }
 
+    let cont = document.getElementById("contador");
+
+    cont.innerHTML = carrinho.length;
+
     document.addEventListener("show.bs.modal", renderModal);
+
+
 
     let btn = document.querySelectorAll(".addCarrinho");
 
     btn.forEach((element) => {
         element.addEventListener("click", adicionarCarrinho);
     });
+
+    
+    function calcularValor(){
+        let soma = 0;
+        for(item of carrinho)        {
+            soma += (item.quantidade * item.preco);
+
+        }
+        document.getElementById("valortotal").innerHTML = `<h3>Valor total: R$ ${soma}</h3>`
+    }
+
 
     function adicionarCarrinho() {
         /*
@@ -40,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 //Transforma nosso array carrinho em um json
                 localStorage.setItem("carrinho", JSON.stringify(carrinho));
+                cont.innerText = carrinho.length;
                 that.innerHTML =
                     "<i class='fas fa-check'></i> Produto Adicionado!";
                 setTimeout(function () {
@@ -48,6 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }, 3000);
             });
     }
+
 
     function renderModal() {
         let html = "";
@@ -62,6 +81,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <th>Quantidade</th>
                                 <th>Valor unitário</th>                            
                                 <th>Valor total</th>
+                                <th></th>
+
                             </tr>
                         </thead>
                         <tbody>`;
@@ -72,11 +93,20 @@ document.addEventListener("DOMContentLoaded", function () {
                                     carrinho[i].imagem
                                 }" width="80" /></td>                     
                                 <td>${carrinho[i].nome}</td>
-                                <td>${carrinho[i].quantidade}</td>
-                                <td>${carrinho[i].preco}</td>
+                                <td>
+                                    <div style="display:flex; justify-content: space-evenly;">
+                                    <button class="btn btn-light"><i class="fas fa-minus"></i></button>
+                                    <input class="form-control"  type="text" style="width: 50px;"></input>
+                                    <button class="btn btn-light"><i class="fas fa-plus"></i></button>
+                                    </div>
+                                </td>
+                                <td>R$ ${carrinho[i].preco}</td>
                                 <td>${
                                     carrinho[i].quantidade * carrinho[i].preco
                                 }</td>
+                                <td>
+                                    <button class="btn btn-danger" ><i class="fas fa-trash"> </i></button>
+                                </td>
                             </tr>`;
             }
 
@@ -84,6 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     </table>`;
 
             document.querySelector(".modal-body").innerHTML = html;
+            calcularValor()
         } else {
             html = "Carrinho vazio!";
         }
