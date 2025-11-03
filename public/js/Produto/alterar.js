@@ -1,84 +1,73 @@
-document.addEventListener("DOMContentLoaded", function () {
-  var btnGravar = document.getElementById("btnAlterar");
+document.addEventListener("DOMContentLoaded", function(){
 
-  btnGravar.addEventListener("click", alterarProduto);
+    var btnGravar = document.getElementById("btnAlterar");
 
-  var inpArquivo = document.getElementById("inputImagem");
-  inpArquivo.addEventListener("change", previa);
-});
+    btnGravar.addEventListener("click", alterarProduto);
 
-function previa() {
-  if (this.files.length > 0) {
-    let divImg = document.getElementById("previaImagem");
+    let inputArquivo = document.getElementById("inputImagem");
+    inputArquivo.addEventListener("change", carregarPrevia);
+})
 
-    let urlArq = URL.createObjectURL(this.files[0]);
-
-    divImg.src = urlArq;
-
-    document.getElementById("divPrevia").style.display = "block";
-  }
+function carregarPrevia() {
+    console.log(this.files);
+    if(this.files.length > 0) {
+        let img = document.getElementById("previaImagem");
+        let urlImg = URL.createObjectURL(this.files[0]);
+        img.src = urlImg;
+        document.getElementById("divPrevia").style.display = "block";
+    }
 }
 
+
 function alterarProduto() {
-  var inputId = document.getElementById("inputId");
-  var inputCodigo = document.getElementById("inputCodigo");
-  var inputNome = document.getElementById("inputNome");
-  var inputQtde = document.getElementById("inputQtde");
-  var inputPreco = document.getElementById("inputPreco");
-  var selMarca = document.getElementById("selMarca");
-  var selCategoria = document.getElementById("selCategoria");
-  var inputImagem = document.getElementById("inputImagem");
 
-  //if de validação básica
-  if (
-    inputCodigo.value != "" &&
-    inputNome.value != "" &&
-    inputQtde.value != "" &&
-    inputQtde.value != "0" &&
-    inputPreco.value != "0" &&
-    selMarca.value != "0" &&
-    selCategoria.value != "0"
-  ) {
-    /*var data = {
-            id: inputId.value,
-            codigo: inputCodigo.value,
-            nome: inputNome.value,
-            quantidade: inputQtde.value,
-            marca: selMarca.value,
-            categoria: selCategoria.value
-        }*/
-    let formData = new FormData();
-    formData.append("id", inputId.value);
-    formData.append("codigo", inputCodigo.value);
-    formData.append("nome", inputNome.value);
-    formData.append("quantidade", inputQtde.value);
-    formData.append("preco", inputPreco.value);
-    formData.append("marca", selMarca.value);
-    formData.append("categoria", selCategoria.value);
-    if(inputImagem.files.length > 0){
-        formData.append("imagem", inputImagem.files[0]);
-    }
     
+    var inputId = document.getElementById("inputId");
+    var inputCodigo = document.getElementById("inputCodigo");
+    var inputNome = document.getElementById("inputNome");
+    var inputQtde = document.getElementById("inputQtde");
+    var inputPreco = document.getElementById("inputPreco");
+    var selMarca = document.getElementById("selMarca");
+    var selCategoria = document.getElementById("selCategoria");
+    var inputImagem = document.getElementById("inputImagem")
 
-    fetch("/produto/alterar", {
-      method: "POST",
-      body: formData,
-    })
-      .then((r) => {
-        return r.json();
-      })
-      .then((r) => {
-        if (r.ok) {
-          alert("Produto alterado!");
-        } else {
-          alert("Erro ao alterar produto");
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  } else {
-    alert("Preencha todos os campos corretamente!");
-    return;
-  }
+    //if de validação básica
+    if(inputCodigo.value != "" && inputNome.value != "" && inputQtde.value != "" && inputQtde.value != '0' && selMarca.value != '0' && selCategoria.value != '0' && inputPreco.value != ""){
+
+        let formData = new FormData();
+        
+        formData.append("id", inputId.value);
+        formData.append("codigo", inputCodigo.value);
+        formData.append("nome", inputNome.value);
+        formData.append("preco", inputPreco.value);
+        formData.append("quantidade", inputQtde.value);
+        formData.append("marca", selMarca.value);
+        formData.append("categoria", selCategoria.value);
+        if(inputImagem.files.length > 0)
+            formData.append("imagem", inputImagem.files[0]);
+
+        fetch('/produto/alterar', {
+            method: "POST",
+            body: formData
+        })
+        .then(r => {
+            return r.json();
+        })
+        .then(r=> {
+            if(r.ok) {
+                alert("Produto alterado!");
+            }
+            else{
+                alert("Erro ao alterar produto");
+            }
+        })
+        .catch(e => {
+            console.log(e);
+        })
+
+    }
+    else{
+        alert("Preencha todos os campos corretamente!");
+        return;
+    }
 }

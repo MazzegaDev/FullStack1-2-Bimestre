@@ -64,7 +64,7 @@ class UsuarioModel {
     }
 
     async obterPorEmailSenha(email, senha) {
-        let sql = "select * from TB_Usuarios where usu_email = ? and usu_senha = ?";
+        let sql = "select * from tb_usuario where usu_email = ? and usu_senha = ?";
 
         let valores = [email, senha];
 
@@ -81,7 +81,7 @@ class UsuarioModel {
     //implementar as funções para manipulação das informações no banco
     async listar() {
 
-        let sql = "select * from TB_Usuarios";
+        let sql = "select * from tb_usuario";
 
         let rows = await banco.ExecutaComando(sql);
         let lista = [];
@@ -94,7 +94,7 @@ class UsuarioModel {
 
     async cadastrar() {
         if(this.#usuarioId == 0) {
-            let sql = "insert into TB_Usuarios (usu_email, usu_nome, usu_senha, usu_ativo, per_id) values (?,?,?,?,?)";
+            let sql = "insert into tb_usuario (usu_email, usu_nome, usu_senha, usu_ativo, per_id) values (?,?,?,?,?)";
 
             let valores = [this.#usuarioEmail, this.#usuarioNome, this.#usuarioSenha, this.#usuarioAtivo, this.#perfilId];
     
@@ -103,7 +103,7 @@ class UsuarioModel {
             return result;
         }
         else{
-            let sql = "update TB_Usuarios set usu_email = ?, usu_nome = ?, usu_senha = ?, usu_ativo = ?, per_id = ? where usu_id = ?";
+            let sql = "update tb_usuario set usu_email = ?, usu_nome = ?, usu_senha = ?, usu_ativo = ?, per_id = ? where usu_id = ?";
 
             let valores = [this.#usuarioEmail, this.#usuarioNome, this.#usuarioSenha, this.#usuarioAtivo, this.#perfilId, this.#usuarioId];
 
@@ -113,7 +113,7 @@ class UsuarioModel {
     }
 
     async obter(id) {
-        let sql = "select * from TB_Usuarios where usu_id = ?";
+        let sql = "select * from tb_usuario where usu_id = ?";
 
         let valores = [id];
 
@@ -128,7 +128,7 @@ class UsuarioModel {
     }
 
     async excluir(id) {
-        let sql = "delete from TB_Usuarios where usu_id = ?";
+        let sql = "delete from tb_usuario where usu_id = ?";
 
         let valores = [id];
         

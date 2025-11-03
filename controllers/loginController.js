@@ -13,7 +13,6 @@ class LoginController {
             let usuario = new UsuarioModel();
             usuario = await usuario.obterPorEmailSenha(req.body.email, req.body.password);
             if(usuario != null) {
-                //Se o usuario existe é criado um cookie na resposta com seu id
                 res.cookie("usuarioLogado", usuario.usuarioId);
                 res.redirect("/");
             }

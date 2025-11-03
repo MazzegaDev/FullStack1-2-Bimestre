@@ -30,7 +30,7 @@ class PerfilModel {
 
     async listar() {
 
-        let sql = "select * from TB_Perfil";
+        let sql = "select * from tb_perfil";
 
         let rows = await banco.ExecutaComando(sql);
 
@@ -40,7 +40,7 @@ class PerfilModel {
             let perfil = new PerfilModel()
 
             perfil.perfilId = rows[i]["per_id"];
-            perfil.perfilDescricao = rows[i]["per_desc"]
+            perfil.perfilDescricao = rows[i]["per_nome"]
 
             lista.push(perfil);
         }

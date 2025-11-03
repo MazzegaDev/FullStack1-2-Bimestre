@@ -5,7 +5,6 @@ class AuthMiddleware {
 
     async verificarUsuarioLogado(req, res, next) {
         if(req.cookies != undefined && req.cookies.usuarioLogado != null){
-            //Pega o id do usuario que veio pelo cookie
             let usuarioId = req.cookies.usuarioLogado;
             let usuario = new UsuarioModel();
             usuario = await usuario.obter(usuarioId);
