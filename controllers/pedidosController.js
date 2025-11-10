@@ -44,7 +44,11 @@ class PedidosController {
                                 itensPedido[i].quantidade;
 
                             //Construa também a baixa de estoque e o valor total, que deve ser feita após a gravação dos itens do pedido
+                            let valorTotal = 0
+                            valorTotal += produtoEncontrado.produtoPreco * itensPedido[i].quantidade;
                             
+
+
                             let estoqueProduto =
                                 produtoEncontrado.produtoQuantidade;
                             let estoqueBaixa =
@@ -53,7 +57,13 @@ class PedidosController {
                             let prdModel = new ProdutoModel();
                             let prdId = produtoEncontrado.produtoId;
                             if ( await prdModel.baixaEstoque(prdId, estoqueBaixa)) {
-                                await itemPedidoModel.gravar();
+                                if(await pedidoModel.finalizarValor(valorTotal)){
+                                    await itemPedidoModel.gravar();
+                                
+                                }else{
+                                    ok = false;
+                                    msg = "Não foi possivel definir o valor final"
+                                }
                                 
                             } else {
                                 ok = false;

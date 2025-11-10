@@ -6,6 +6,8 @@ class PedidoModel {
 
     #pedidoId;
     #pedidoData;
+    #valorTotal;
+
 
     get pedidoId() {
         return this.#pedidoId;
@@ -13,9 +15,16 @@ class PedidoModel {
     set pedidoId(pedidoId){
         this.#pedidoId = pedidoId;
     }
+    set valorTotal(vtotal){
+        this.#valorTotal = vtotal;
+    }
+
 
     get pedidoData() {
         return this.#pedidoData;
+    }
+    get valorTotal(){
+        return this.#valorTotal;
     }
     set pedidoData(pedidoData){
         this.#pedidoData = pedidoData;
@@ -44,11 +53,19 @@ class PedidoModel {
     }
 
     async gravar() {
-        let sql = "insert into tb_pedido (ped_data) values (now())";     
+        let sql = "insert into tb_pedido (ped_data, ped_valorTotal) values (now(), null)";     
         let valores = [];
         
         let result = await banco.ExecutaComandoLastInserted(sql, valores);
 
+        return result;
+    }
+
+    async finalizarValor(ped_id, valor){
+        const sql = "update tb_pedido set ped_valorTotal = ? where ped_id = ?";
+        const values = [valor, ped_id];
+
+        const result = await banco.ExecutaComandoNonQuery(sql, values);
         return result;
     }
 
